@@ -4,22 +4,36 @@ let isNumber = function (n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
-
-function Game(message = 'Угадай число от 1 до 100') {
+function Game(ourNum, tryNum, message = `Угадайте число от 1 до 100! У вас ${tryNum+1} попыток`) {
   let input = prompt(message);
-  let ourNum = Math.floor(Math.random() * 101);
+  
   console.log('input: ', input, 'ourNum: ', ourNum);
   if (input === null) {
-    return alert('Игра окончена!');
+    return alert('Игра окончена! До скорых встреч!');
   } else if (!isNumber(input)) {
-    return Game("Введите число!");
-  } else if (input < ourNum) {
-    return Game("Загаданное число больше!");
-  } else if (input > ourNum) {
-    return Game("Загаданное число меньше!");
+    return Game(ourNum, tryNum, "Введите число!");
+  } else if (input < ourNum && tryNum !== 0) {
+    tryNum--;
+    return Game(ourNum, tryNum, `Загаданное число больше! Осталось ${tryNum+1} попыток`);
+  } else if (input > ourNum && tryNum !== 0) {
+    tryNum--;
+    return Game(ourNum, tryNum, `Загаданное число больше! Осталось ${tryNum+1} попыток`);
   } else if (+ input === ourNum) {
-    return alert('Вы угадали число!');
+    let restart = confirm('Поздравляем! Вы угадали число! Хотели бы сыграть еще?');
+    if (restart === true) {
+      Game(ourNum, 9);
+    } else {
+      return alert('Спасибо за участие! До скорых встреч!');
+    }
+  } else if (tryNum === 0) {
+    let restart = confirm('Попытки закончились, хотите сыграть еще?');
+    if (restart === true) {
+      Game(ourNum, 9);
+    } else {
+      return alert('Спасибо за участие! До скорых встреч!');
+    }
   }
 }
-
-Game();
+let ourNum = 55;
+let tryNum = 9;
+Game(ourNum, tryNum);
