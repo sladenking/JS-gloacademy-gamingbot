@@ -49,18 +49,9 @@ const gameRandom = function (attemps) {
         repeat = confirm('Попытки закончились, хотите сыграть еще?');
       }
       if (repeat) {gameRandom(attemps);}
-      alert('Спасибо за участие! До скорых встреч!');
     }
-    
+    return alert('Спасибо за участие! До скорых встреч!');
   }());
 };
 
 gameRandom(10);
-
-
-
-
-
-
-
-
